@@ -7,7 +7,6 @@ library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
     ]
 )
 // CI part
-def user_choice = ""
 pipeline {
     agent any
     tools {
@@ -25,6 +24,14 @@ pipeline {
                   buildJar()
                }
             }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Application jar has been built successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to build application jar."
+                }
+            }
         }
         stage('build image') {
             steps {
@@ -36,16 +43,40 @@ pipeline {
                    sh "mkdir --parents ./argocd-app-config/$env.APPLICATION_NAME/ && cp -rf ./target/classes/META-INF/dekorate/kubernetes.yml ./argocd-app-config/$env.APPLICATION_NAME/"
                 }
             }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Docker image has been built and pushed successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to build or push Docker image."
+                }
+            }
         }
         stage('Replace Docker image name') {
-          steps {
-            sh "python ./scripts/replaceimagename.py $env.APPLICATION_NAME"
-          }
+            steps {
+                sh "python ./scripts/replaceimagename.py $env.APPLICATION_NAME"
+            }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Docker image name has been replaced successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to replace Docker image name."
+                }
+            }
         }
         stage('deploy to ArgoCD') {
             steps {
                 dir("argocd-app-config") {
                     sh "kubectl apply -f application.yaml"
+                }
+            }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Application has been deployed to ArgoCD successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to deploy application to ArgoCD."
                 }
             }
         }
@@ -62,6 +93,27 @@ pipeline {
               }
             }
           }
+          post {
+              success {
+                  slackSend color: 'good', message: "Build SUCCESS: Git repository has been updated successfully."
+              }
+              failure {
+                  slackSend color: 'danger', message: "Build FAILURE: Failed to update Git repository."
+              }
+          }
+        }
+    }
+    post {
+        always {
+            script {
+                def buildStatus = currentBuild.result == 'SUCCESS' ? 'SUCCESS' : 'FAILURE'
+                slackSend color: buildStatus == 'SUCCESS' ? 'good' : 'danger', message: "Build ${buildStatus}: ${currentBuild.fullDisplayName} (${env.BUILD_NUMBER})"
+            }
+        }
+        aborted {
+            script {
+                slackSend color: 'warning', message: "Build ABORTED: ${currentBuild.fullDisplayName} (${env.BUILD_NUMBER})"
+            }
         }
     }
 }
