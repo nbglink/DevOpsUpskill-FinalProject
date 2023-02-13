@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @KubernetesApplication(
 		ports = @Port(name = "http", containerPort = 9090),
 		labels = @Label(key = "version", value = "v1"),
-		initContainers = @Container(image="nbglink/demo-app:jma-11"),
+		initContainers = @Container(image="nbglink/demo-app:jma-11", imagePullPolicy = ImagePullPolicy.Always),
 		serviceType = ServiceType.LoadBalancer,
 		replicas = 3
 
