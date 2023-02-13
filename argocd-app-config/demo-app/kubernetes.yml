@@ -5,24 +5,24 @@ metadata:
   annotations:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
-    version: v1
     app.kubernetes.io/version: jma-11
+    version: v1
     app.kubernetes.io/name: demo-app
   name: demo-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      version: v1
       app.kubernetes.io/version: jma-11
+      version: v1
       app.kubernetes.io/name: demo-app
   template:
     metadata:
       annotations:
         app.dekorate.io/vcs-url: <<unknown>>
       labels:
-        version: v1
         app.kubernetes.io/version: jma-11
+        version: v1
         app.kubernetes.io/name: demo-app
     spec:
       containers:
@@ -31,7 +31,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          image: nbglink/demo-app:jma-11
+          image: jenkins/demo-app:jma-11
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
@@ -58,6 +58,10 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 10
+      initContainers:
+        - image: nbglink/demo-app:jma-11
+          imagePullPolicy: Always
+          name: ""
 ---
 apiVersion: v1
 kind: Service
