@@ -52,19 +52,19 @@ pipeline {
                 }
             }
         }
-        stage('Replace Docker image name') {
-            steps {
-                sh "python ./scripts/replaceimagename.py $env.APPLICATION_NAME"
-            }
-            post {
-                success {
-                    slackSend color: 'good', message: "Build SUCCESS: Docker image name has been replaced successfully."
-                }
-                failure {
-                    slackSend color: 'danger', message: "Build FAILURE: Failed to replace Docker image name."
-                }
-            }
-        }
+//         stage('Replace Docker image name') {
+//             steps {
+//                 sh "python ./scripts/replaceimagename.py $env.APPLICATION_NAME"
+//             }
+//             post {
+//                 success {
+//                     slackSend color: 'good', message: "Build SUCCESS: Docker image name has been replaced successfully."
+//                 }
+//                 failure {
+//                     slackSend color: 'danger', message: "Build FAILURE: Failed to replace Docker image name."
+//                 }
+//             }
+//         }
         stage('deploy to ArgoCD') {
             steps {
                 dir("argocd-app-config") {
