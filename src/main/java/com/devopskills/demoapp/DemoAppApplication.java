@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 		ports = @Port(name = "http", containerPort = 9090),
 		labels = @Label(key = "version", value = "v1"),
 		serviceType = ServiceType.LoadBalancer,
-		replicas = 4
+		replicas = 1
 
 )
 public class DemoAppApplication {
