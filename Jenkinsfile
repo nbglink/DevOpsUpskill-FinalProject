@@ -65,21 +65,6 @@ pipeline {
 //                 }
 //             }
 //         }
-        stage('deploy to ArgoCD') {
-            steps {
-                dir("argocd-app-config") {
-                    sh "kubectl apply -f application.yaml"
-                }
-            }
-            post {
-                success {
-                    slackSend color: 'good', message: "Build SUCCESS: Application has been deployed to ArgoCD successfully."
-                }
-                failure {
-                    slackSend color: 'danger', message: "Build FAILURE: Failed to deploy application to ArgoCD."
-                }
-            }
-        }
         stage('Update GIT') {
           steps {
             script {
@@ -101,6 +86,21 @@ pipeline {
                   slackSend color: 'danger', message: "Build FAILURE: Failed to update Git repository."
               }
           }
+        }
+        stage('deploy to ArgoCD') {
+            steps {
+                dir("argocd-app-config") {
+                    sh "kubectl apply -f application.yaml"
+                }
+            }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Application has been deployed to ArgoCD successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to deploy application to ArgoCD."
+                }
+            }
         }
     }
     post {
