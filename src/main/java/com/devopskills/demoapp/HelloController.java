@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @GetMapping("/")
     public String hello() {
-        return "Build Number:"+System.getenv("BUILD_NUMBER");
+        return "Build Number:"+System.getProperty("IMAGE_NAME");
     }
 }
