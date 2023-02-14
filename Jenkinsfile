@@ -22,7 +22,7 @@ pipeline {
                script {
                   echo 'building application jar...'
                   echo "building the application for branch $BRANCH_NAME"
-                  sh 'mvn package'
+                  sh "mvn package -DIMAGE_NAME=${env.IMAGE_NAME}"
                }
             }
             post {
