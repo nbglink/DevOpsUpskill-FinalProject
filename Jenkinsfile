@@ -21,7 +21,8 @@ pipeline {
             steps {
                script {
                   echo 'building application jar...'
-                  buildJar()
+                  echo "building the application for branch $BRANCH_NAME"
+                  sh 'mvn package'
                }
             }
             post {
