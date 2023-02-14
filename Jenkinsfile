@@ -38,10 +38,10 @@ pipeline {
             steps {
                 script {
                    echo 'building docker image...'
-                   echo "building the docker image..."
-                   sh "docker build -t $env.IMAGE_NAME ."
                    withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: "PASS", usernameVariable: "USER")]) {
+                       sh "docker build -t $env.IMAGE_NAME ."
                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                       sh "docker push $env.IMAGE_NAME"
                    }
                 //    dockerLogin()
                 //    dockerPush(env.IMAGE_NAME)
