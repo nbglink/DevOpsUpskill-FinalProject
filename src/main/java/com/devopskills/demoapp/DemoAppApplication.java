@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		labels = @Label(key = "version", value = "v1"),
 		imagePullPolicy = ImagePullPolicy.Always,
 		serviceType = ServiceType.LoadBalancer,
-		replicas = 3
+		replicas = 2
 
 )
-@DockerBuild(image="nbglink/demo-app:jma-11",ч)
+@DockerBuild(image="nbglink/demo-app:jma-11")
 public class DemoAppApplication {
 
 	public static void main(String[] args) {
