@@ -1,14 +1,23 @@
-project: default
-source:
-  repoURL: 'https://github.com/nbglink/DevOpsUpskill-FinalProject.git'
-  path: ./argocd-app-config/demo-app
-  targetRevision: HEAD
-destination:
-  server: 'https://kubernetes.default.svc'
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app
   namespace: demo-app
-syncPolicy:
-  automated:
-    prune: true
-  syncOptions:
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/nbglink/DevOpsUpskill-FinalProject.git
+    targetRevision: HEAD
+    path: ./argocd-app-config/demo-app
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: demo-app
+
+  syncPolicy:
+    syncOptions:
     - CreateNamespace=true
-    - PruneLast=true
+
+    automated:
+      selfHeal: true
+      prune: true
