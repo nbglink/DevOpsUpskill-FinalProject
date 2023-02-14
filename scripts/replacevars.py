@@ -1,7 +1,7 @@
 import sys
 import re
 
-file_path = "../src/main/java/com/devopskills/demoapp/DemoAppApplication.java"
+file_path = "./src/main/java/com/devopskills/demoapp/DemoAppApplication.java"
 new_value = sys.argv[1]  # Replace "new-value" with the value that you want to use
 
 with open(file_path, 'r') as file:
