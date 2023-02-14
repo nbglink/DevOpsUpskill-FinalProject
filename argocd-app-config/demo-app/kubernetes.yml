@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/version: jma-11
   name: demo-app
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: demo-app
