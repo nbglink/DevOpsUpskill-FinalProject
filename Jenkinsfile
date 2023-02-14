@@ -38,7 +38,8 @@ pipeline {
             steps {
                 script {
                    echo 'building docker image...'
-                   buildImage(env.IMAGE_NAME)
+                   echo "building the docker image..."
+                   sh "docker build -t $env.IMAGE_NAME ."
                    dockerLogin()
                    dockerPush(env.IMAGE_NAME)
                    sh "mkdir --parents ./argocd-app-config/$env.APPLICATION_NAME/ && cp -rf ./target/classes/META-INF/dekorate/kubernetes.yml ./argocd-app-config/$env.APPLICATION_NAME/"
