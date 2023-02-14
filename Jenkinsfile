@@ -1,11 +1,11 @@
 #!/usr/bin/env groovy
 
-// library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
-//     [$class: 'GitSCMSource',
-//      remote: 'https://github.com/nbglink/jenkins-shared-library.git',
-//      credentialsId: 'github-credentials'
-//     ]
-// )
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+     remote: 'https://github.com/nbglink/jenkins-shared-library.git',
+     credentialsId: 'github-credentials'
+    ]
+)
 // CI part
 pipeline {
     agent any
@@ -38,11 +38,13 @@ pipeline {
             steps {
                 script {
                    echo 'building docker image...'
+                   echo "building the docker image..."
                    sh "docker build -t $env.IMAGE_NAME ."
                    withCredentials([script.usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: "PASS", usernameVariable: "USER")]) {
                        sh "echo $PASS | docker login -u $USER --password-stdin"
                    }
-                   
+                //    dockerLogin()
+                //    dockerPush(env.IMAGE_NAME)
                    sh "mkdir --parents ./argocd-app-config/$env.APPLICATION_NAME/ && cp -rf ./target/classes/META-INF/dekorate/kubernetes.yml ./argocd-app-config/$env.APPLICATION_NAME/"
                 }
             }
