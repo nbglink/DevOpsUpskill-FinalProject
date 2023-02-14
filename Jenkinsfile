@@ -13,16 +13,17 @@ pipeline {
         maven 'Maven'
     }
     environment {
-        IMAGE_NAME = 'nbglink/demo-app:jma-11'
+        VERSION = 'jma-11'
         APPLICATION_NAME = 'demo-app'
+        IMAGE_NAME = "nbglink/$env.APPLICATION_NAME:$env.VERSION"
     }
     stages {
         stage('build app') {
             steps {
                script {
-                  echo 'building application jar...'
+                  echo "$env.IMAGE_NAME"
                   echo "building the application for branch $BRANCH_NAME"
-                  sh "mvn package -DIMAGE_NAME=${env.IMAGE_NAME}"
+                  sh 'mvn package'
                }
             }
             post {
