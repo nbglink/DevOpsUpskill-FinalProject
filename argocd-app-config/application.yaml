@@ -21,4 +21,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-      force: true
