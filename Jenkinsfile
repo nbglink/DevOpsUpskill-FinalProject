@@ -10,20 +10,20 @@ pipeline {
         APPLICATION_NAME = 'demo-app'
         IMAGE_NAME = "nbglink/$env.APPLICATION_NAME:$env.VERSION"
     }
-    stage('Replace Docker image name') {
-        steps {
-            sh "python ./scripts/replacevars.py $env.APPLICATION_NAME"
-        }
-        post {
-            success {
-                slackSend color: 'good', message: "Build SUCCESS: Variables has been replaced successfully."
-            }
-            failure {
-                slackSend color: 'danger', message: "Build FAILURE: Failed to replace variables."
-            }
-        }
-    }
     stages {
+        stage('Replace Docker image name') {
+            steps {
+                sh "python ./scripts/replacevars.py $env.APPLICATION_NAME"
+            }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Variables has been replaced successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to replace variables."
+                }
+            }
+        }
         stage('build app') {
             steps {
                script {
