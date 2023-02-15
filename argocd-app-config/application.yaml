@@ -16,7 +16,7 @@ spec:
 
   syncPolicy:
     syncOptions:
-    - PruneLast=true
+    - Force=true
 
 
     automated:
