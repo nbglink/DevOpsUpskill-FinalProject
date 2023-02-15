@@ -6,7 +6,7 @@ pipeline {
         maven 'Maven'
     }
     environment {
-        VERSION = 'jma-13'
+        VERSION = 'jma-14'
         APPLICATION_NAME = 'demo-app'
         IMAGE_NAME = "nbglink/$env.APPLICATION_NAME:$env.VERSION"
     }
