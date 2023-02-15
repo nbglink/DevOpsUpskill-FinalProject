@@ -6,14 +6,14 @@ pipeline {
         maven 'Maven'
     }
     environment {
-        VERSION = 'jma-11'
+        VERSION = 'jma-12'
         APPLICATION_NAME = 'demo-app'
         IMAGE_NAME = "nbglink/$env.APPLICATION_NAME:$env.VERSION"
     }
     stages {
         stage('Replace Docker image name') {
             steps {
-                sh "python ./scripts/replacevars.py $env.APPLICATION_NAME"
+                sh "python ./scripts/replacevars.py $env.IMAGE_NAME $env.APPLICATION_NAME $env.VERSION"
             }
             post {
                 success {
