@@ -5,25 +5,25 @@ metadata:
   annotations:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
+    version: v1
     app.kubernetes.io/name: demo-app
     app.kubernetes.io/version: jma-14
-    version: v1
   name: demo-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
+      version: v1
       app.kubernetes.io/name: demo-app
       app.kubernetes.io/version: jma-14
-      version: v1
   template:
     metadata:
       annotations:
         app.dekorate.io/vcs-url: <<unknown>>
       labels:
+        version: v1
         app.kubernetes.io/name: demo-app
         app.kubernetes.io/version: jma-14
-        version: v1
     spec:
       containers:
         - env:
@@ -80,4 +80,3 @@ spec:
     version: v1
     app.kubernetes.io/version: jma-14
   type: LoadBalancer
-
