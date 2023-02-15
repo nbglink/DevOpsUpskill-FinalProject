@@ -12,12 +12,11 @@ spec:
     path: ./argocd-app-config/demo-app
   destination: 
     server: https://kubernetes.default.svc
-    namespace: demo-app
 
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
     - PruneLast=true
+
 
     automated:
       prune: true
