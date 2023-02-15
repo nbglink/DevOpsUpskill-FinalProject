@@ -11,7 +11,7 @@ pipeline {
         IMAGE_NAME = "nbglink/$env.APPLICATION_NAME:$env.VERSION"
     }
     stages {
-        stage('Replace Docker image name') {
+        stage('Replace files variables with Jenkins env vars') {
             steps {
                 sh "python ./scripts/replacevars.py $env.IMAGE_NAME $env.APPLICATION_NAME $env.VERSION"
             }
@@ -84,21 +84,21 @@ pipeline {
               }
           }
         }
-        // stage('deploy to ArgoCD') {
-        //     steps {
-        //         dir("argocd-app-config") {
-        //             sh "kubectl apply -f application.yaml"
-        //         }
-        //     }
-        //     post {
-        //         success {
-        //             slackSend color: 'good', message: "Build SUCCESS: Application has been deployed to ArgoCD successfully."
-        //         }
-        //         failure {
-        //             slackSend color: 'danger', message: "Build FAILURE: Failed to deploy application to ArgoCD."
-        //         }
-        //     }
-        // }
+        stage('deploy to ArgoCD') {
+            steps {
+                dir("argocd-app-config") {
+                    sh "kubectl apply -f application.yaml"
+                }
+            }
+            post {
+                success {
+                    slackSend color: 'good', message: "Build SUCCESS: Application has been deployed to ArgoCD successfully."
+                }
+                failure {
+                    slackSend color: 'danger', message: "Build FAILURE: Failed to deploy application to ArgoCD."
+                }
+            }
+        }
     }
     post {
         always {
