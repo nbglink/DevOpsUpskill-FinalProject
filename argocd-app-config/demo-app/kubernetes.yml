@@ -80,3 +80,4 @@ spec:
     version: v1
     app.kubernetes.io/version: jma-13
   type: LoadBalancer
+
