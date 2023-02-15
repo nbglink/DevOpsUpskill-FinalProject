@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		replicas = 1
 
 )
-@DockerBuild(image="nbglink/demo-app:jma-15")
+@DockerBuild(image="nbglink/demo-app:jma-16")
 public class DemoAppApplication {
 
 	public static void main(String[] args) {

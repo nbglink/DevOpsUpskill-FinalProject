@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.devopskills</groupId>
 	<artifactId>demo-app</artifactId>
-	<version>jma-15</version>
+	<version>jma-16</version>
 	<name>demo-app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

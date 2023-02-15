@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:x86_64-ubuntu-jre-11.0.18_10
 
 EXPOSE 9090
 
-COPY ./target/demo-app-jma-15.jar /usr/app/
+COPY ./target/demo-app-jma-16.jar /usr/app/
 WORKDIR /usr/app
 
-ENTRYPOINT ["java", "-jar", "demo-app-jma-15.jar"]
+ENTRYPOINT ["java", "-jar", "demo-app-jma-16.jar"]
