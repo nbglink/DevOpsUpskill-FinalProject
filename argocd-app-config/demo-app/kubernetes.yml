@@ -5,24 +5,27 @@ metadata:
   annotations:
     app.dekorate.io/vcs-url: <<unknown>>
   labels:
+    version: v1
     app.kubernetes.io/name: demo-app
-    app.kubernetes.io/version: jma-15
+    app.kubernetes.io/version: jma-16
     version: v1
   name: demo-app
 spec:
   replicas: 1
   selector:
     matchLabels:
+      version: v1
       app.kubernetes.io/name: demo-app
-      app.kubernetes.io/version: jma-15
+      app.kubernetes.io/version: jma-16
       version: v1
   template:
     metadata:
       annotations:
         app.dekorate.io/vcs-url: <<unknown>>
       labels:
+        version: v1
         app.kubernetes.io/name: demo-app
-        app.kubernetes.io/version: jma-15
+        app.kubernetes.io/version: jma-16
         version: v1
     spec:
       containers:
