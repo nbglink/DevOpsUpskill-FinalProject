@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 		labels = @Label(key = "version", value = "v1"),
 		imagePullPolicy = ImagePullPolicy.Always,
 		serviceType = ServiceType.LoadBalancer,
-		replicas = 1
+		replicas = 3
 
 )
 @DockerBuild(image="nbglink/demo-app:jma-16")
